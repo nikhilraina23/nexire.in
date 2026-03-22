@@ -1,5 +1,4 @@
-import founderImage from 'C:/Users/Hp/Downloads/project (1)/dist/assets/MY-PIC.png'
-
+import founderImage from "../../assets/MY-PIC.png";
 export function Vision() {
   return (
     <section id="vision" className="py-20 bg-white">
