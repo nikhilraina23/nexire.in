@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Mail, Phone, MapPin, Instagram, Linkedin } from 'lucide-react';
 
 export function Contact() {
-  const contactRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLDivElement | null>(null);
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -28,15 +28,15 @@ export function Contact() {
     );
 
     const elements = contactRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
+
+    elements?.forEach((el: Element) => observer.observe(el));
 
     return () => observer.disconnect();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Basic validation
     if (!formData.email.includes('@')) {
       alert('Please enter a valid email');
       return;
@@ -45,10 +45,11 @@ export function Contact() {
     setLoading(true);
 
     try {
-      const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+      const response = await fetch('https://formspree.io/f/xqegzkpp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         body: JSON.stringify(formData),
       });
@@ -143,6 +144,7 @@ export function Contact() {
             <a
               href="https://wa.me/916304337657"
               target="_blank"
+              rel="noopener noreferrer"
               className="block mb-8 bg-green-500 text-white text-center py-3 rounded-lg hover:bg-green-600 transition"
             >
               Chat on WhatsApp
@@ -156,6 +158,7 @@ export function Contact() {
                 <a
                   href="https://www.instagram.com/nexire.online"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 bg-[#F5F5F5] rounded-full flex items-center justify-center hover:bg-[#EF4444] hover:text-white"
                 >
                   <Instagram size={20} />
@@ -164,6 +167,7 @@ export function Contact() {
                 <a
                   href="https://www.linkedin.com/company/nexirepro/"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 bg-[#F5F5F5] rounded-full flex items-center justify-center hover:bg-[#EF4444] hover:text-white"
                 >
                   <Linkedin size={20} />
